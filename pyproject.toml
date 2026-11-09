@@ -1,0 +1,17 @@
+[project]
+name = "clipboard-time-travel"
+version = "0.1.0"
+description = "クリップボード履歴を暗号化して保存・検索できる Flet 製アプリ"
+requires-python = ">=3.10"
+dependencies = [
+  "flet==0.28.3",
+  "pyperclip>=1.8.2",
+  "cryptography>=42.0",
+  "keyboard>=0.13.5; sys_platform == 'win32'",
+]
+
+[tool.flet]
+org = "dev.clipboardtimetravel"
+product = "Clipboard Time Travel"
+company = "Personal"
+copyright = "Copyright 2026"
