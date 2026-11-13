@@ -17,10 +17,20 @@ jobs:
         include:
           - os: windows-2022
             target: windows
+            arch: x64
             artifact: ClipboardTimeTravel-windows
+          - os: windows-11-arm
+            target: windows
+            arch: arm64
+            artifact: ClipboardTimeTravel-windows-arm64
           - os: ubuntu-latest
             target: linux
+            arch: x64
             artifact: ClipboardTimeTravel-linux
+          - os: ubuntu-24.04-arm
+            target: linux
+            arch: arm64
+            artifact: ClipboardTimeTravel-linux-arm64
     runs-on: ${{ matrix.os }}
     env:
       # Windows の既定コードページ(cp1252)では flet/rich の記号出力で落ちるため UTF-8 を強制
@@ -41,6 +51,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          architecture: ${{ matrix.arch }}
 
       - name: 依存関係のインストール
         run: |
