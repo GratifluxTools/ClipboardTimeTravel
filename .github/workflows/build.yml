@@ -19,10 +19,6 @@ jobs:
             target: windows
             arch: x64
             artifact: ClipboardTimeTravel-windows
-          - os: windows-11-arm
-            target: windows
-            arch: arm64
-            artifact: ClipboardTimeTravel-windows-arm64
           - os: ubuntu-latest
             target: linux
             arch: x64
@@ -32,8 +28,6 @@ jobs:
             arch: arm64
             artifact: ClipboardTimeTravel-linux-arm64
     runs-on: ${{ matrix.os }}
-    # Windows arm64 は Flutter/flet が公式には対応していないため実験扱い（失敗しても全体は止めない）
-    continue-on-error: ${{ matrix.target == 'windows' && matrix.arch == 'arm64' }}
     env:
       # Windows の既定コードページ(cp1252)では flet/rich の記号出力で落ちるため UTF-8 を強制
       PYTHONUTF8: "1"
@@ -65,6 +59,8 @@ jobs:
           git clone --depth 1 -b "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$HOME/flutter/$FLUTTER_VERSION"
           echo "$HOME/flutter/$FLUTTER_VERSION/bin" >> "$GITHUB_PATH"
           "$HOME/flutter/$FLUTTER_VERSION/bin/flutter" --version
+          # sky_engine など Linux 向けエンジンのキャッシュを先に取得する（無いと flet のパッケージ解決で失敗する）
+          "$HOME/flutter/$FLUTTER_VERSION/bin/flutter" precache --linux
 
       - name: 依存関係のインストール
         run: |
