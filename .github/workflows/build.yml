@@ -55,13 +55,16 @@ jobs:
         with:
           channel: stable
 
-      - name: Flutter（arm64・git から取得）
+      # flet build は ~/flutter/<version> に Flutter を入れるが、公式の Linux 配布物は x64 のみで
+      # Dart SDK が x64 になってしまう。そのため arm64 では git から同じバージョンを取得して先に置く。
+      - name: Flutter（arm64・git から取得、flet と同じバージョン）
         if: matrix.arch == 'arm64'
         shell: bash
         run: |
-          git clone --depth 1 -b stable https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
-          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
-          "$RUNNER_TEMP/flutter/bin/flutter" --version
+          FLUTTER_VERSION=3.29.2
+          git clone --depth 1 -b "$FLUTTER_VERSION" https://github.com/flutter/flutter.git "$HOME/flutter/$FLUTTER_VERSION"
+          echo "$HOME/flutter/$FLUTTER_VERSION/bin" >> "$GITHUB_PATH"
+          "$HOME/flutter/$FLUTTER_VERSION/bin/flutter" --version
 
       - name: 依存関係のインストール
         run: |
