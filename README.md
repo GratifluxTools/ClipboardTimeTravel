@@ -49,11 +49,24 @@ Supported platforms: **Windows** (full features) and **Linux** (clipboard histor
 Because the app is not code-signed yet, Windows SmartScreen may show a warning. Choose *More info* → *Run anyway* if you trust the download.
 
 **Linux**
-1. Download the Linux zip from the Releases page and extract it.
-2. Install a clipboard tool: `xclip` (X11) or `wl-clipboard` (Wayland).
-3. Run the `ClipboardTimeTravel` executable inside the extracted folder.
 
-To get the source application name on Linux, install `xdotool` (X11 only).
+The Releases page has two Linux zip files. Choose the one that matches your CPU:
+- `ClipboardTimeTravel-linux.zip`: for x86_64 (Intel / AMD) PCs
+- `ClipboardTimeTravel-linux-arm64.zip`: for ARM64 (aarch64) devices, such as a Raspberry Pi running a 64-bit OS or an ARM laptop
+
+To check your CPU type, run `uname -m` in a terminal. `x86_64` means the normal zip; `aarch64` means the arm64 zip.
+
+1. Install the required packages. On Debian / Ubuntu:
+   ```
+   sudo apt update
+   sudo apt install -y libgtk-3-0 xclip xdotool
+   ```
+   On Fedora: `sudo dnf install gtk3 xclip xdotool`. On Arch Linux: `sudo pacman -S gtk3 xclip xdotool`.
+   If you use Wayland, install `wl-clipboard` instead of `xclip`.
+2. Download the zip that matches your CPU from the Releases page and extract it.
+3. Open a terminal in the extracted folder and run `./clipboard_time_travel`.
+
+`xdotool` is used to get the source application name and works on X11 only.
 
 <a id="quick-start-en"></a>
 ### Quick start
@@ -180,11 +193,24 @@ Clipboard Time Travel は、コピーした内容を暗号化して手元に保�
 現時点ではコード署名をしていないため、Windows の SmartScreen が警告を出すことがあります。配布元を信頼できる場合は「詳細情報」→「実行」を選んでください。
 
 **Linux**
-1. Releases ページから Linux 用の zip をダウンロードし、展開します。
-2. クリップボード用のツールを入れます：`xclip`（X11）または `wl-clipboard`（Wayland）。
-3. 展開したフォルダ内の `ClipboardTimeTravel` を実行します。
 
-Linux でコピー元アプリ名を取得するには `xdotool` が必要です（X11 のみ）。
+Releases ページには Linux 用の zip が2種類あります。お使いの CPU に合うものを選んでください。
+- `ClipboardTimeTravel-linux.zip`：x86_64（Intel / AMD）の PC 用
+- `ClipboardTimeTravel-linux-arm64.zip`：ARM64（aarch64）の機器用。64ビット版 OS の Raspberry Pi や ARM 版のノート PC など
+
+CPU の種類は、ターミナルで `uname -m` を実行して確認できます。`x86_64` と表示されれば通常の zip、`aarch64` と表示されれば arm64 の zip です。
+
+1. 必要なパッケージを入れます。Debian / Ubuntu の場合は次のとおりです。
+   ```
+   sudo apt update
+   sudo apt install -y libgtk-3-0 xclip xdotool
+   ```
+   Fedora の場合は `sudo dnf install gtk3 xclip xdotool`、Arch Linux の場合は `sudo pacman -S gtk3 xclip xdotool` です。
+   Wayland を使っている場合は、`xclip` の代わりに `wl-clipboard` を入れてください。
+2. Releases ページから、お使いの CPU に合う zip をダウンロードして展開します。
+3. 展開したフォルダでターミナルを開き、`./clipboard_time_travel` を実行します。
+
+`xdotool` はコピー元アプリ名の取得に使われ、X11 でのみ動作します。
 
 <a id="quick-start-ja"></a>
 ### はじめに
